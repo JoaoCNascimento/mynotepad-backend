@@ -20,11 +20,12 @@ public class UserController : ControllerBase
     {
         try
         {
-            throw new NotImplementedException();
+            var result = _userService.GetOne(User.Identity?.Name!);
+            return Ok(result);
         }
         catch(Exception ex)
         {
-            _logger.LogError($"There was an error while trying to retrieve the user data! Error: {ex.Message}", ex);
+            _logger.LogError($"There was an error while trying to retrieve the user data. Error: {ex.Message}", ex);
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }

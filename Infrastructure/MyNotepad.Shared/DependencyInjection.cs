@@ -17,6 +17,7 @@ public static class DependencyInjection
         services.AddScoped<INoteService, NoteService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
         return services;
     }
 

@@ -21,7 +21,7 @@ public class NoteController : ControllerBase
     {
         try
         {
-            var userId = "";
+            var userId = User.Identity.Name;
             var notes = _noteService.CreateOne(userId, note);
             return Ok(notes);
         }
@@ -37,7 +37,7 @@ public class NoteController : ControllerBase
     {
         try
         {
-            var userId = "";
+            var userId = User.Identity.Name;
             var notes = _noteService.GetAll(userId);
             return Ok(notes);
         }
@@ -53,7 +53,7 @@ public class NoteController : ControllerBase
     {
         try
         {
-            var userId = "";
+            var userId = User.Identity.Name;
             var notes = _noteService.GetOne(userId, noteId);
             return Ok(notes);
         }
@@ -69,7 +69,7 @@ public class NoteController : ControllerBase
     {
         try
         {
-            var userId = "";
+            var userId = User.Identity.Name;
             _noteService.RemoveOne(userId, noteId);
             return Ok();
         }
@@ -85,7 +85,7 @@ public class NoteController : ControllerBase
     {
         try
         {
-            var userId = "";
+            var userId = User.Identity.Name;
             var updatedNote = _noteService.UpdateOne(userId, note);
             return Ok(updatedNote);
         }

@@ -30,6 +30,12 @@ public class UserRepository : IUserRepository
         return collection.Find(filter).FirstOrDefault();
     }
 
+    public User GetOneByEmail(string email)
+    {
+        var filter = Builders<User>.Filter.Eq(user => user.Email, email);
+        return collection.Find(filter).FirstOrDefault();
+    }
+
     public bool RemoveOne(ObjectId id)
     {
         throw new NotImplementedException();
