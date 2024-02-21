@@ -11,8 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddInfrastructure(builder.Configuration);
-
+// Infrastructure that comes from the shared DependencyInjectionClass
+builder.Services.AddInfrastructure();
+// Custom mapper that comes from the shared DependencyInjectionClass
 builder.Services.AddEntityToDTOMapper();
 
 var app = builder.Build();

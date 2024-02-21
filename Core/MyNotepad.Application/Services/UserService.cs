@@ -26,18 +26,12 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 
-    public UserDTO GetOne(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public UserDTO GetOne(string id)
     {
         return _mapper.Map<UserDTO>(_userRepository.GetOne(new ObjectId(id)));
     }
 
-
-    public bool RemoveOne(int id)
+    public bool RemoveOne(string id)
     {
         throw new NotImplementedException();
     }

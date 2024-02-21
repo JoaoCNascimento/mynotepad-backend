@@ -30,17 +30,7 @@ public class UserRepository : IUserRepository
         return collection.Find(filter).FirstOrDefault();
     }
 
-    public User GetOne(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public User RemoveOne(ObjectId id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool RemoveOne(int id)
+    public bool RemoveOne(ObjectId id)
     {
         throw new NotImplementedException();
     }

@@ -10,10 +10,11 @@ namespace MyNotepad.Shared;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddScoped<INoteRepository, NoteRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<INoteService, NoteService>();
         services.AddScoped<IUserService, UserService>();
         return services;
     }
