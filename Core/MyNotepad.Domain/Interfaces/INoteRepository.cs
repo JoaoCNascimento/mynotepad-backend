@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MyNotepad.Domain.Entities;
 
-namespace MyNotepad.Persistence.Interfaces;
+namespace MyNotepad.Domain.Interfaces;
 public interface INoteRepository : IBaseRepository<Note>
 {
     public Note CreateOne(Note obj, ObjectId userId);

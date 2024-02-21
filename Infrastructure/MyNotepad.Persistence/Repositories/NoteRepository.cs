@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MyNotepad.Domain.Entities;
-using MyNotepad.Persistence.Interfaces;
+using MyNotepad.Domain.Interfaces;
 
 namespace MyNotepad.Persistence.Repositories;
 public class NoteRepository : INoteRepository

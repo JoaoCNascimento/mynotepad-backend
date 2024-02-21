@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mynotepad.Persistence\Mynotepad.Persistence.csproj" />
+    <ProjectReference Include="..\..\Core\MyNotepad.Application\MyNotepad.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

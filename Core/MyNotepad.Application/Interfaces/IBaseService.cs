@@ -1,5 +1,5 @@
-namespace MyNotepad.Persistence.Interfaces;
-public interface IBaseRepository<T>
+namespace MyNotepad.Application.Interfaces;
+public interface IBaseService<T>
 {
     public List<T> GetAll();
     public T GetOne(int id);
