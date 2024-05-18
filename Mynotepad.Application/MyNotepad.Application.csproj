@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyNotepad.Domain\MyNotepad.Domain.csproj" />
+    <ProjectReference Include="..\MyNotepad.External\MyNotepad.External.csproj" />
+    <ProjectReference Include="..\MyNotepad.Identity\MyNotepad.Identity.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,26 @@
+@MyNotepad_HostAddress = http://localhost:5038
+
+GET {{MyNotepad_HostAddress}}/weatherforecast/
+Accept: application/json
+###
+POST {{MyNotepad_HostAddress}}/api/user/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "teste",
+  "email": "teste@email.com",
+  "password": "teste"
+}
+###
+POST {{MyNotepad_HostAddress}}/api/user/signup
+Accept: applicaition/json
+Content-Type: application/json
+
+{
+  "name": "Fulano Usuário",
+  "email": "usuario@teste.com",
+  "password": "string123",
+  "passwordConfirmation": "string123"
+}
+###
