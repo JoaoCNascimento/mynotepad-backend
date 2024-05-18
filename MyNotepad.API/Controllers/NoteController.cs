@@ -24,7 +24,7 @@ namespace MyNotepad.API.Controllers
         {
             try
             {
-                var result = _service.CreateOne(note);
+                var result = _service.CreateOne(note, int.Parse(User.Identity?.Name!));
                 return Ok(result);
             }
             catch (Exception ex)

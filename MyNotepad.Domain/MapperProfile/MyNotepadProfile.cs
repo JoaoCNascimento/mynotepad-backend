@@ -16,6 +16,9 @@ namespace MyNotepad.Domain.MapperProfile
 
             CreateMap<Note, NoteDTO>()
                 .ReverseMap();
+
+            CreateMap<NoteDTO, Note>()
+                .ConstructUsing(n => new Note(n.Title, n.Description, n.Color, n.UserId));
         }
     }
 }

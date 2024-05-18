@@ -17,8 +17,9 @@ namespace MyNotepad.Application.Services
             _mapper = mapper;
         }
 
-        public NoteDTO CreateOne(NoteDTO note)
+        public NoteDTO CreateOne(NoteDTO note, int UserId)
         {
+            note.UserId = UserId;
             var result = _repository.Create(_mapper.Map<Note>(note));
             return _mapper.Map<NoteDTO>(result);
         }
