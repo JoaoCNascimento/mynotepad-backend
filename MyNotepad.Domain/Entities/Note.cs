@@ -10,7 +10,6 @@ namespace MyNotepad.Domain.Entities
 
         [ForeignKey(nameof(User))]
         public int UserId { get; private set; }
-        public User User { get; private set; } = new User();
 
         public Note() { }
 
@@ -25,6 +24,5 @@ namespace MyNotepad.Domain.Entities
         public void UpdateTitle(string title) => Title = title;
         public void UpdateDescription(string description) => Description = description;
         public void UpdateColor(string color) => Color = color;
-        public void UpdateUserId(int userId) => UserId = userId;
     }
 }
