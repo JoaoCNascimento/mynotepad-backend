@@ -4,11 +4,10 @@ namespace MyNotepad.Domain.Requests
 {
     public class LoginRequest
     {
-        [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = $"{nameof(Email)} field is invalid")]
         public string Email { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = $"{nameof(Password)} field is required")]
         public string Password { get; set; } = string.Empty;
     }
 }

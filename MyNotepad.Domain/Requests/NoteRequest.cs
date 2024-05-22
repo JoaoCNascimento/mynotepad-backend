@@ -8,14 +8,14 @@ namespace MyNotepad.Domain.Requests
     {
         public int? Id { get; set; }
 
-        [Required(ErrorMessage = "The 'title' field is required")]
-        [Length(1, 120, ErrorMessage = "The length of 'title' field must be from 1 to 120 characters")]
+        [Required(ErrorMessage = $"{nameof(Title)} field is required")]
+        [Length(1, 120, ErrorMessage = $"{nameof(Title)} field length must be from 1 to 120 characters")]
         public string Title { get; set; } = string.Empty;
 
-        [MaxLength(2500, ErrorMessage = "The max length of 'description' must be of 2500 characters")]
+        [MaxLength(2500, ErrorMessage = $"{nameof(Description)} field max length must be of 2500 characters")]
         public string? Description { get; set; } = string.Empty;
         
-        [Required, DefaultValue("blue")]
+        [Required(ErrorMessage = $"{nameof(Color)} field is required"), DefaultValue("blue")]
         public string Color { get; set; } = string.Empty;
     }
 }
