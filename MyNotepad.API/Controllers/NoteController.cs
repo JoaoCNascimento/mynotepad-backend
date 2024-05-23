@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyNotepad.Domain.DTOs;
 using MyNotepad.Domain.Interfaces.Services;
+using MyNotepad.Domain.Requests;
 
 namespace MyNotepad.API.Controllers
 {
@@ -20,10 +21,13 @@ namespace MyNotepad.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateNote(NoteDTO note)
+        public ActionResult<NoteDTO> CreateOne([FromBody] NoteRequest note)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return StatusCode(StatusCodes.Status422UnprocessableEntity, ModelState.Values);
+
                 var result = _service.CreateOne(note, int.Parse(User.Identity?.Name!));
                 return Ok(result);
             }
@@ -35,7 +39,7 @@ namespace MyNotepad.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public ActionResult<NoteDTO> GetById(int id)
         {
             try
             {
@@ -50,7 +54,7 @@ namespace MyNotepad.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public ActionResult<List<NoteDTO>> GetAll()
         {
             try
             {
@@ -79,17 +83,20 @@ namespace MyNotepad.API.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateOne(int id, NoteDTO note)
+        [HttpPut]
+        public ActionResult<NoteDTO> UpdateOne([FromBody] NoteRequest note)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return StatusCode(StatusCodes.Status422UnprocessableEntity, ModelState.Values);
+
                 var result = _service.UpdateOne(note);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"An error ocurred when trying to update the note of id: '{id}' for the user of id {User.Identity?.Name!}. Error: {ex.Message}");
+                _logger.LogError($"An error ocurred when trying to update the note of id: '{note.Id}' for the user of id {User.Identity?.Name!}. Error: {ex.Message}");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

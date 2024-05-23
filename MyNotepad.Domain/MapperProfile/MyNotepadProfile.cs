@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MyNotepad.Domain.DTOs;
 using MyNotepad.Domain.Entities;
+using MyNotepad.Domain.Requests;
 
 namespace MyNotepad.Domain.MapperProfile
 {
@@ -19,6 +20,8 @@ namespace MyNotepad.Domain.MapperProfile
 
             CreateMap<NoteDTO, Note>()
                 .ConstructUsing(n => new Note(n.Title, n.Description, n.Color, n.UserId));
+
+            CreateMap<NoteRequest, NoteDTO>();
         }
     }
 }

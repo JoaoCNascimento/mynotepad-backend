@@ -3,6 +3,7 @@ using MyNotepad.Domain.DTOs;
 using MyNotepad.Domain.Entities;
 using MyNotepad.Domain.Interfaces.Repositories;
 using MyNotepad.Domain.Interfaces.Services;
+using MyNotepad.Domain.Requests;
 
 namespace MyNotepad.Application.Services
 {
@@ -17,10 +18,10 @@ namespace MyNotepad.Application.Services
             _mapper = mapper;
         }
 
-        public NoteDTO CreateOne(NoteDTO note, int UserId)
+        public NoteDTO CreateOne(NoteRequest note, int UserId)
         {
-            note.UserId = UserId;
-            var result = _repository.Create(_mapper.Map<Note>(note));
+            var _note = _mapper.Map<NoteDTO>(note);
+            var result = _repository.Create(_mapper.Map<Note>(_note));
             return _mapper.Map<NoteDTO>(result);
         }
 
@@ -41,9 +42,10 @@ namespace MyNotepad.Application.Services
             return _mapper.Map<NoteDTO>(result);
         }
 
-        public NoteDTO UpdateOne(NoteDTO note)
+        public NoteDTO UpdateOne(NoteRequest note)
         {
-            var result = _repository.Update(_mapper.Map<Note>(note));
+            var _note = _mapper.Map<NoteDTO>(note);
+            var result = _repository.Update(_mapper.Map<Note>(_note));
             return _mapper.Map<NoteDTO>(result);
         }
     }

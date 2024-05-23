@@ -2,7 +2,7 @@
 
 namespace MyNotepad.Domain.Enums
 {
-    public enum DefaultColors
+    public enum DefaultNoteColors
     {
         Blue,
         Green,
@@ -16,25 +16,25 @@ namespace MyNotepad.Domain.Enums
 
     public static class DefaultColorsExtension
     {
-        public static Color From(this DefaultColors color)
+        public static Color From(this DefaultNoteColors color)
         {
             switch (color)
             {
-                case DefaultColors.Blue:
+                case DefaultNoteColors.Blue:
                     return new Color("", "");
-                case DefaultColors.Green:
+                case DefaultNoteColors.Green:
                     return new Color("", "");
-                case DefaultColors.Red:
+                case DefaultNoteColors.Red:
                     return new Color("", "");
-                case DefaultColors.Yellow:
+                case DefaultNoteColors.Yellow:
                     return new Color("", "");
-                case DefaultColors.Orange:
+                case DefaultNoteColors.Orange:
                     return new Color("", "");
-                case DefaultColors.Pink:
+                case DefaultNoteColors.Pink:
                     return new Color("", "");
-                case DefaultColors.Black:
+                case DefaultNoteColors.Black:
                     return new Color("", "");
-                case DefaultColors.White:
+                case DefaultNoteColors.White:
                     return new Color("", "");
                 default:
                     return new Color("", "");
