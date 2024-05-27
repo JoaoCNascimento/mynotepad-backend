@@ -3,8 +3,10 @@ using Microsoft.Extensions.Logging;
 using MyNotepad.Domain.DTOs;
 using MyNotepad.Domain.Entities;
 using MyNotepad.Domain.Enums;
+using MyNotepad.Domain.Exceptions;
 using MyNotepad.Domain.Interfaces.Repositories;
 using MyNotepad.Domain.Interfaces.Services;
+using MyNotepad.Domain.Requests;
 using MyNotepad.External.Handlers.Interfaces;
 using MyNotepad.Identity.Interfaces;
 
@@ -16,26 +18,33 @@ namespace MyNotepad.Application.Services
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
         private readonly IRabbitMQHandler _producer;
+        private readonly IEmailService _emailService;
         private readonly ILogger<IUserService> _logger;
 
-        public UserService(IUserRepository repository, IMapper mapper, IAuthorizationService authorizationService, IRabbitMQHandler producer, ILogger<IUserService> logger) 
+        public UserService(IUserRepository repository, IMapper mapper, IAuthorizationService authorizationService, 
+            IRabbitMQHandler producer, ILogger<IUserService> logger, IEmailService emailService) 
         {
             _repository = repository;
             _mapper = mapper;
             _authorizationService = authorizationService;
             _producer = producer;
             _logger = logger;
+            _emailService = emailService;
         }
 
-        public Dictionary<string, string> Login(UserDTO user)
+        public Dictionary<string, string> Login(LoginRequest login)
         {
-            var result = _authorizationService.Login(user);
+            var result = _authorizationService.Login(login);
             return result;
         }
 
-        public UserDTO ValidateAndSignUpUser(UserDTO user)
+        public UserDTO ValidateAndSignUpUser(UserRegisterRequest user)
         {
-            _authorizationService.ValidateUser(user);
+            if (_emailService.EmailIsAlreadyInUse(user.Email))
+            {
+                _logger.LogInformation($"The entered email: '{user.Email}' is already in use.");
+                throw new InvalidFieldException("The entered email is already in use", "email", user.Email);
+            }
 
             user.Password = _authorizationService.HashUserPassword(user.Password);
 
@@ -45,7 +54,6 @@ namespace MyNotepad.Application.Services
             _.UpdateAccountStatus(UserAccountStatus.Active);
 
             var result = _repository.Create(_);
-
             // Implement the next line when the email validation microsservice be working
             // Task.Factory.StartNew(() => SendUserEmailConfirmation(user.Email));
 
@@ -90,10 +98,9 @@ namespace MyNotepad.Application.Services
             // Should update in the database that the email confirmation was sent to the user
         }
 
-        public UserDTO Delete(string id)
+        public UserDTO Delete(int id)
         {
             throw new NotImplementedException();
         }
-
     }
 }

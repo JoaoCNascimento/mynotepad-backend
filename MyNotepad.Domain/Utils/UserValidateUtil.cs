@@ -5,6 +5,9 @@ using MyNotepad.Domain.Interfaces.Repositories;
 
 namespace MyNotepad.Domain.Utils
 {
+    // Deprecated, this class won't be used for now
+    // TODO refactor if necessary to do aditional user validations in future
+    [Obsolete("Refactor if necessary to do aditional and specific user validations in the future")]
     public class ValidateUserUtil(UserDTO user, IUserRepository userRepository)
     {
         private ILogger _logger = new LoggerFactory().CreateLogger<ValidateUserUtil>();
@@ -19,7 +22,7 @@ namespace MyNotepad.Domain.Utils
         public void Validate()
         {
             ValidateName(user.Name);
-            ValidatePassword(user.Password, user.PasswordConfirmation);
+            ValidatePassword(user.Password, string.Empty); // always returns false
             ValidateEmail(user.Email);
         }
 

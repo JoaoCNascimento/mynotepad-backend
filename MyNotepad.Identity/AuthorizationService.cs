@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using MyNotepad.Domain.DTOs;
 using MyNotepad.Domain.Exceptions;
 using MyNotepad.Domain.Interfaces.Repositories;
+using MyNotepad.Domain.Requests;
 using MyNotepad.Domain.Utils;
 using MyNotepad.Identity.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
@@ -25,11 +26,11 @@ namespace MyNotepad.Identity
             _mapper = mapper;
         }
 
-        public void ValidateUser(UserDTO user)
+        public void ValidateUser(UserRegisterRequest user)
         {
             try
             {
-                new ValidateUserUtil(user, _userRepository).Validate();
+                //new ValidateUserUtil(user, _userRepository).Validate();
             }
             catch(InvalidFieldException ex)
             {
@@ -47,11 +48,11 @@ namespace MyNotepad.Identity
         public bool AuthenticateUserPassword(string enteredPassword, string userPassword) 
                 => BCrypt.Net.BCrypt.Verify(enteredPassword, userPassword);
 
-        public Dictionary<string, string> Login(UserDTO user)
+        public Dictionary<string, string> Login(LoginRequest login)
         {
             var result = new Dictionary<string, string>();
 
-            var _ = _userRepository.GetByEmail(user.Email);
+            var _ = _userRepository.GetByEmail(login.Email);
 
             if (_ == null)
             {
@@ -59,7 +60,7 @@ namespace MyNotepad.Identity
                 return result;
             }
 
-            if (AuthenticateUserPassword(user.Password, _.Password))
+            if (AuthenticateUserPassword(login.Password, _.Password))
             {
                 var token = GenerateToken(_mapper.Map<UserDTO>(_));
                 result.Add("token", token);

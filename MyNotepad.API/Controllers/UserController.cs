@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyNotepad.Domain.DTOs;
 using MyNotepad.Domain.Exceptions;
 using MyNotepad.Domain.Interfaces.Services;
+using MyNotepad.Domain.Requests;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,17 +25,21 @@ namespace MyNotepad.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult SignUp(UserDTO user)
+        public IActionResult SignUp([FromBody] UserRegisterRequest user)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState.Values);
+
                 var result = _service.ValidateAndSignUpUser(user);
                 return Ok(result);
             }
             catch (InvalidFieldException ex)
             {
-                _logger.LogError($"An error ocurred when trying to validate and sign up a new user: {ex.Message}", ex);
-                return StatusCode(StatusCodes.Status422UnprocessableEntity);
+                _logger.LogError($"The field {ex.FieldName} is invalid. Error: {ex.Message}");
+                // Returning "Conflict" status code, since it is the only validation that throws this error currently 
+                return StatusCode(StatusCodes.Status409Conflict); // Change if additional user validations be necessary in the future
             }
             catch (Exception ex)
             {
@@ -45,7 +50,7 @@ namespace MyNotepad.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login(UserDTO user)
+        public ActionResult<Dictionary<string, string>> Login([FromBody] LoginRequest user)
         {
             try
             {
@@ -60,7 +65,7 @@ namespace MyNotepad.API.Controllers
         }
 
         [HttpGet("/api/[controller]/")]
-        public IActionResult GetUserData()
+        public ActionResult<UserDTO> GetData()
         {
             try
             {
@@ -75,7 +80,7 @@ namespace MyNotepad.API.Controllers
         }
 
         [HttpPut("/api/[controller]/")]
-        public IActionResult UpdateUser(UserDTO user)
+        public ActionResult<UserDTO> Update([FromBody] UserDTO user)
         {
             try
             {

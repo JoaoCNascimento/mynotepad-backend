@@ -35,6 +35,7 @@ namespace MyNotepad.Shared
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<INoteService, NoteService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<INoteRepository, NoteRepository>();

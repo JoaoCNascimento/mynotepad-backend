@@ -1,13 +1,14 @@
 ﻿using MyNotepad.Domain.DTOs;
+using MyNotepad.Domain.Requests;
 
 namespace MyNotepad.Domain.Interfaces.Services
 {
     public interface IUserService
     {
-        public UserDTO ValidateAndSignUpUser(UserDTO user);
-        public Dictionary<string, string> Login(UserDTO user);
+        public UserDTO ValidateAndSignUpUser(UserRegisterRequest user);
+        public Dictionary<string, string> Login(LoginRequest login);
         public UserDTO GetUserData(int id);
         public UserDTO Update(UserDTO user);
-        public UserDTO Delete(string id);
+        public UserDTO Delete(int id);
     }
 }
