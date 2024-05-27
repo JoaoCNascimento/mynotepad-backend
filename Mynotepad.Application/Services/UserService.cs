@@ -44,7 +44,7 @@ namespace MyNotepad.Application.Services
 
             user.Password = _authorizationService.HashUserPassword(user.Password);
 
-            var _ = new User(user.Name, user.Email, user.Password);
+            var _ = new User(user.Name, user.Email, user.Password, user.BirthDate);
             // Remove the line below when the microservice responsible
             // for email validation be working
             _.UpdateAccountStatus(UserAccountStatus.Active);
@@ -60,10 +60,8 @@ namespace MyNotepad.Application.Services
         {
             // Authenticate user before changing the account status
             var user = _repository.GetById(int.Parse(id));
-            if (_authorizationService.AuthenticateUserPassword(password, user.Password));
-            {
+            if (_authorizationService.AuthenticateUserPassword(password, user.Password))
                 user.UpdateAccountStatus(UserAccountStatus.Disabled);
-            }
 
             return _mapper.Map<UserDTO>(_repository.Update(user));
         }

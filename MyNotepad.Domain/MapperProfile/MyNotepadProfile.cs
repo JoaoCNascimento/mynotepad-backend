@@ -10,7 +10,7 @@ namespace MyNotepad.Domain.MapperProfile
         public MyNotepadProfile() 
         {
             CreateMap<UserDTO, User>()
-                .ConstructUsing(u => new User(u.Name, u.Email, u.Password));
+                .ConstructUsing(u => new User(u.Name, u.Email, u.Password, u.BirthDate));
 
             CreateMap<User, UserDTO>()
                 .ForMember(src => src.Password, dest => dest.Condition(src => false));
