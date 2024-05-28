@@ -18,35 +18,52 @@ namespace MyNotepad.Application.Services
             _mapper = mapper;
         }
 
-        public NoteDTO CreateOne(NoteRequest note, int UserId)
+        public NoteDTO CreateOne(NoteRequest noteRequest, int UserId)
         {
-            var _note = _mapper.Map<NoteDTO>(note);
-            var result = _repository.Create(_mapper.Map<Note>(_note));
+            var note = _mapper.Map<NoteDTO>(noteRequest);
+            note.UserId = UserId;
+            var result = _repository.Create(_mapper.Map<Note>(note));
             return _mapper.Map<NoteDTO>(result);
         }
 
-        public void DeleteById(int id)
+        public void DeleteById(int id, int userId)
         {
+            var note = _repository.GetById(id);
+
+            if (note == null)
+                throw new KeyNotFoundException("Note not found");
+
+            if (note.UserId != userId)
+                throw new UnauthorizedAccessException("The logged user doesn't own this note");
+
             _repository.Delete(id);
         }
 
         public List<NoteDTO> GetAll(int userId)
         {
-            var result = _repository.GetAllByUserId(userId);
-            return _mapper.Map<List<NoteDTO>>(result);
+            var notes = _repository.GetAllByUserId(userId);
+            return _mapper.Map<List<NoteDTO>>(notes);
         }
 
-        public NoteDTO GetById(int id)
+        public NoteDTO GetById(int id, int userId)
         {
-            var result = _repository.GetById(id);
-            return _mapper.Map<NoteDTO>(result);
+            var note = _repository.GetById(id);
+
+            if (note.UserId != userId)
+                throw new UnauthorizedAccessException("The logged user doesn't own this note");
+            
+            return _mapper.Map<NoteDTO>(note);
         }
 
-        public NoteDTO UpdateOne(NoteRequest note)
+        public NoteDTO UpdateOne(NoteRequest noteRequest, int userId)
         {
-            var _note = _mapper.Map<NoteDTO>(note);
-            var result = _repository.Update(_mapper.Map<Note>(_note));
-            return _mapper.Map<NoteDTO>(result);
+            // Check if the logged user owns the note that is being updated
+            _ = GetById((int)noteRequest.Id!, userId);
+
+            var note = _mapper.Map<NoteDTO>(noteRequest);
+
+            var updatedNote = _repository.Update(_mapper.Map<Note>(note));
+            return _mapper.Map<NoteDTO>(updatedNote);
         }
     }
 }

@@ -5,10 +5,10 @@ namespace MyNotepad.Domain.Interfaces.Services
 {
     public interface INoteService
     {
-        public NoteDTO CreateOne(NoteRequest note, int UserId);
-        public NoteDTO UpdateOne(NoteRequest note);
-        public void DeleteById(int id);
-        public NoteDTO GetById(int id);
+        public NoteDTO CreateOne(NoteRequest note, int userId);
+        public NoteDTO UpdateOne(NoteRequest note, int userId);
+        public void DeleteById(int id, int userId);
+        public NoteDTO GetById(int id, int userId);
         public List<NoteDTO> GetAll(int userId);
     }
 }

@@ -43,7 +43,7 @@ namespace MyNotepad.API.Controllers
         {
             try
             {
-                var result = _service.GetById(id);
+                var result = _service.GetById(id, int.Parse(User.Identity?.Name!));
                 return Ok(result);
             }
             catch (Exception ex)
@@ -73,7 +73,7 @@ namespace MyNotepad.API.Controllers
         {
             try
             {
-                _service.DeleteById(id);
+                _service.DeleteById(id, int.Parse(User.Identity?.Name!));
                 return Ok();
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace MyNotepad.API.Controllers
                 if (!ModelState.IsValid)
                     return StatusCode(StatusCodes.Status422UnprocessableEntity, ModelState.Values);
 
-                var result = _service.UpdateOne(note);
+                var result = _service.UpdateOne(note, int.Parse(User.Identity?.Name!));
                 return Ok(result);
             }
             catch (Exception ex)
