@@ -93,5 +93,29 @@ namespace MyNotepad.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpDelete("/api/[controller]/")]
+        public ActionResult<UserDTO> Delete([FromBody] string password)
+        {
+            try
+            {
+                var result = _service.Delete(password, int.Parse(User.Identity?.Name!));
+                _logger.LogInformation($"User account " +
+                    $"'{string.Join("", result.Email.Take(result.Email.Length / 3)) + "*********" 
+                    + string.Join("", result.Email.Skip(result.Email.Length / 2))}' " 
+                    + $"was disabled sucessfully");
+                return Ok(result);
+            }
+            catch (UnauthorizedOperationException ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return StatusCode(StatusCodes.Status403Forbidden);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error ocurred when trying to delete the user: {ex.Message}", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

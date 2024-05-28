@@ -56,12 +56,14 @@ namespace MyNotepad.Application.Services
             return _mapper.Map<User, UserDTO>(result);
         }
 
-        public UserDTO Delete(string password, string id)
+        public UserDTO Delete(string password, int id)
         {
             // Authenticate user before changing the account status
-            var user = _repository.GetById(int.Parse(id));
-            if (_authorizationService.AuthenticateUserPassword(password, user.Password))
-                user.UpdateAccountStatus(UserAccountStatus.Disabled);
+            var user = _repository.GetById(id);
+            if (!_authorizationService.AuthenticateUserPassword(password, user.Password))
+                throw new UnauthorizedOperationException("Invalid password for the current user, access denied");
+
+            user.UpdateAccountStatus(UserAccountStatus.Disabled);
 
             return _mapper.Map<UserDTO>(_repository.Update(user));
         }
@@ -75,11 +77,6 @@ namespace MyNotepad.Application.Services
         public UserDTO GetUserData(int id)
         {
             return _mapper.Map<UserDTO>(_repository.GetById(id));
-        }
-
-        public UserDTO Delete(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -9,6 +9,6 @@ namespace MyNotepad.Domain.Interfaces.Services
         public Dictionary<string, string> Login(LoginRequest login);
         public UserDTO GetUserData(int id);
         public UserDTO Update(UserDTO user);
-        public UserDTO Delete(int id);
+        public UserDTO Delete(string password, int id);
     }
 }
