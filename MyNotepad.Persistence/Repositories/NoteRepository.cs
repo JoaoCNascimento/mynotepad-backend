@@ -36,7 +36,7 @@ namespace MyNotepad.Persistence.Repositories
             var _entity = GetById(entity.Id);
 
             _entity.UpdateTitle(entity.Title);
-            _entity.UpdateDescription(entity.Description);
+            _entity.UpdateContent(entity.Content);
             _entity.UpdateColor(entity.Color);
             
             _context.SaveChanges();

@@ -12,8 +12,8 @@ namespace MyNotepad.Domain.Requests
         [StringLength(maximumLength: 120, MinimumLength = 1, ErrorMessage = $"{nameof(Title)} field length must be from 1 to 120 characters")]
         public string Title { get; set; } = string.Empty;
 
-        [MaxLength(2500, ErrorMessage = $"{nameof(Description)} field max length must be of 2500 characters")]
-        public string? Description { get; set; } = string.Empty;
+        [MaxLength(2500, ErrorMessage = $"{nameof(Content)} field max length must be of 2500 characters")]
+        public string? Content { get; set; } = string.Empty;
         
         [Required(ErrorMessage = $"{nameof(Color)} field is required"), DefaultValue("blue"), ValidColor]
         public string Color { get; set; } = string.Empty;

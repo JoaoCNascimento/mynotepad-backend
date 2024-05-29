@@ -64,7 +64,7 @@ namespace MyNotepad
                 .IsRequired();
 
             modelBuilder.Entity<Note>()
-                .Property(n => n.Description)
+                .Property(n => n.Content)
                 .HasMaxLength(2500);
 
             modelBuilder.Entity<Note>()

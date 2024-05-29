@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyNotepad;
 
@@ -10,9 +11,11 @@ using MyNotepad;
 namespace MyNotepad.Persistence.Migrations
 {
     [DbContext(typeof(MyNotepadDbContext))]
-    partial class MyNotepadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240529142320_renameDescriptionToContent")]
+    partial class renameDescriptionToContent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
