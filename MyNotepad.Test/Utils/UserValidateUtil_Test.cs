@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MyNotepad.Domain.DTOs;
 using MyNotepad.Domain.Exceptions;
 using MyNotepad.Domain.Interfaces.Repositories;
+using MyNotepad.Domain.Requests;
 using MyNotepad.Domain.Utils;
 
 namespace MyNotepad.Test.Utils
@@ -22,12 +22,12 @@ namespace MyNotepad.Test.Utils
             {
                 IUserRepository userRepository = scope.ServiceProvider.GetService<IUserRepository>()!;
 
-                var userToValidate = new UserDTO
+                var userToValidate = new UserRegisterRequest
                 {
                     Name = "Test",
                     Email = "Test@gmail.com",
                     Password = "password",
-                    PasswordConfirmation = "password"
+                    PasswordConfirm = "password"
                 };
 
                 try
@@ -48,12 +48,12 @@ namespace MyNotepad.Test.Utils
             {
                 IUserRepository userRepository = scope.ServiceProvider.GetService<IUserRepository>()!;
 
-                var userToValidate = new UserDTO
+                var userToValidate = new UserRegisterRequest
                 {
                     Name = "Te", // This name should not pass the validation
                     Email = "teste@gmail.com",
                     Password = "password",
-                    PasswordConfirmation = "password"
+                    PasswordConfirm = "password"
                 };
 
                 Assert.Throws<InvalidFieldException>(new ValidateUserUtil(userToValidate, userRepository).Validate);
@@ -67,12 +67,12 @@ namespace MyNotepad.Test.Utils
             {
                 IUserRepository userRepository = scope.ServiceProvider.GetService<IUserRepository>()!;
 
-                var userToValidate = new UserDTO
+                var userToValidate = new UserRegisterRequest
                 {
                     Name = "Test",
                     Email = "@gmail.com", // This email should not pass the validation
                     Password = "password",
-                    PasswordConfirmation = "password"
+                    PasswordConfirm = "password"
                 };
 
                 Assert.Throws<InvalidFieldException>(new ValidateUserUtil(userToValidate, userRepository).Validate);
@@ -86,12 +86,12 @@ namespace MyNotepad.Test.Utils
             {
                 IUserRepository userRepository = scope.ServiceProvider.GetService<IUserRepository>()!;
 
-                var userToValidate = new UserDTO
+                var userToValidate = new UserRegisterRequest
                 {
                     Name = "Test",
                     Email = "Test@gmail.com",
                     Password = "password",
-                    PasswordConfirmation = "different-password"
+                    PasswordConfirm = "different-password"
                 };
 
                 Assert.Throws<InvalidFieldException>(new ValidateUserUtil(userToValidate, userRepository).Validate);
@@ -105,12 +105,12 @@ namespace MyNotepad.Test.Utils
             {
                 IUserRepository userRepository = scope.ServiceProvider.GetService<IUserRepository>()!;
 
-                var userToValidate = new UserDTO
+                var userToValidate = new UserRegisterRequest
                 {
                     Name = string.Concat(Enumerable.Repeat("T", 256)),
                     Email = "Test@gmail.com",
                     Password = "password",
-                    PasswordConfirmation = "password"
+                    PasswordConfirm = "password"
                 };
 
                 Assert.Throws<InvalidFieldException>(new ValidateUserUtil(userToValidate, userRepository).Validate);
@@ -124,12 +124,12 @@ namespace MyNotepad.Test.Utils
             {
                 IUserRepository userRepository = scope.ServiceProvider.GetService<IUserRepository>()!;
 
-                var userToValidate = new UserDTO
+                var userToValidate = new UserRegisterRequest
                 {
                     Name = "Test",
                     Email = string.Concat(Enumerable.Repeat("T", 256)) + "@gmail.com",
                     Password = "password",
-                    PasswordConfirmation = "password"
+                    PasswordConfirm = "password"
                 };
 
                 Assert.Throws<InvalidFieldException>(new ValidateUserUtil(userToValidate, userRepository).Validate);
