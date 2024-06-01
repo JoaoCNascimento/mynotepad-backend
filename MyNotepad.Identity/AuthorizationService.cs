@@ -6,7 +6,6 @@ using MyNotepad.Domain.Exceptions;
 using MyNotepad.Domain.Interfaces.Repositories;
 using MyNotepad.Domain.Requests;
 using MyNotepad.Domain.Responses;
-using MyNotepad.Domain.Utils;
 using MyNotepad.Identity.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
