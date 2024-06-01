@@ -1,4 +1,5 @@
-﻿using MyNotepad.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MyNotepad.Domain.Entities;
 using MyNotepad.Domain.Interfaces.Repositories;
 
 namespace MyNotepad.Persistence.Repositories
@@ -23,6 +24,7 @@ namespace MyNotepad.Persistence.Repositories
         {
             return _context.Notes
                 .Where(n => n.UserId.Equals(userId))
+                .AsNoTracking()
                 .ToList();
         }
 
