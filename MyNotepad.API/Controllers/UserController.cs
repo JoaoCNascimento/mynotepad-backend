@@ -4,6 +4,7 @@ using MyNotepad.Domain.DTOs;
 using MyNotepad.Domain.Exceptions;
 using MyNotepad.Domain.Interfaces.Services;
 using MyNotepad.Domain.Requests;
+using MyNotepad.Domain.Responses;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,7 +26,7 @@ namespace MyNotepad.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult SignUp([FromBody] UserRegisterRequest user)
+        public ActionResult<UserDTO> SignUp([FromBody] UserRegisterRequest user)
         {
             try
             {
@@ -50,7 +51,7 @@ namespace MyNotepad.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult<Dictionary<string, string>> Login([FromBody] LoginRequest user)
+        public ActionResult<TokenResponse> Login([FromBody] LoginRequest user)
         {
             try
             {

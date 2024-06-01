@@ -7,6 +7,7 @@ using MyNotepad.Domain.Exceptions;
 using MyNotepad.Domain.Interfaces.Repositories;
 using MyNotepad.Domain.Interfaces.Services;
 using MyNotepad.Domain.Requests;
+using MyNotepad.Domain.Responses;
 using MyNotepad.Identity.Interfaces;
 
 namespace MyNotepad.Application.Services
@@ -28,7 +29,7 @@ namespace MyNotepad.Application.Services
             _emailService = emailService;
         }
 
-        public Dictionary<string, string> Login(LoginRequest login)
+        public TokenResponse Login(LoginRequest login)
         {
             var result = _authorizationService.Login(login);
             return result;

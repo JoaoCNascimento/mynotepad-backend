@@ -5,6 +5,7 @@ using MyNotepad.Domain.DTOs;
 using MyNotepad.Domain.Exceptions;
 using MyNotepad.Domain.Interfaces.Repositories;
 using MyNotepad.Domain.Requests;
+using MyNotepad.Domain.Responses;
 using MyNotepad.Domain.Utils;
 using MyNotepad.Identity.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
@@ -48,26 +49,21 @@ namespace MyNotepad.Identity
         public bool AuthenticateUserPassword(string enteredPassword, string userPassword) 
                 => BCrypt.Net.BCrypt.Verify(enteredPassword, userPassword);
 
-        public Dictionary<string, string> Login(LoginRequest login)
+        public TokenResponse Login(LoginRequest login)
         {
-            var result = new Dictionary<string, string>();
+            var result = new TokenResponse();
 
             var _ = _userRepository.GetByEmail(login.Email);
 
             if (_ == null)
             {
-                result.Add("token", "");
                 return result;
             }
 
             if (AuthenticateUserPassword(login.Password, _.Password))
             {
                 var token = GenerateToken(_mapper.Map<UserDTO>(_));
-                result.Add("token", token);
-            }
-            else
-            {
-                result.Add("token", "");
+                result.Token = token;
             }
 
             return result;
