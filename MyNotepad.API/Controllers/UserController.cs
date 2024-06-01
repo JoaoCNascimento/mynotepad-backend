@@ -6,8 +6,6 @@ using MyNotepad.Domain.Interfaces.Services;
 using MyNotepad.Domain.Requests;
 using MyNotepad.Domain.Responses;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MyNotepad.API.Controllers
 {
     [Authorize]
