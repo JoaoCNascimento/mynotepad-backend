@@ -30,6 +30,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{F936FC66-E529-4F72-B04A-B4CB8944F2E3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{3B2754D2-33A8-481A-AB77-61B26AA4E47E}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-conf", "docker-conf", "{3D7FAB6E-0FF8-422E-A28A-54777BE9A243}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +88,7 @@ Global
 		{129572F7-C22E-43CA-A37E-B1E4CF796A8B} = {81525BD2-6931-4926-8A25-7CDB22D23D21}
 		{00C22DE7-BB39-4942-995D-EF04240C717D} = {F936FC66-E529-4F72-B04A-B4CB8944F2E3}
 		{8F01A884-5A39-4476-B836-4BEE5A3A5F52} = {982E4205-5F76-43B8-A639-327D3CEF1020}
+		{3D7FAB6E-0FF8-422E-A28A-54777BE9A243} = {3B2754D2-33A8-481A-AB77-61B26AA4E47E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5DB8998E-8A07-4639-A21F-560C06A875D9}
