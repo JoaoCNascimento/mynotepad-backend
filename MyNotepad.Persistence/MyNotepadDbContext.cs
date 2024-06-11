@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MyNotepad.Domain.Entities;
 using MyNotepad.Domain.Enums;
+using Npgsql;
 namespace MyNotepad
 {
 
@@ -16,8 +17,26 @@ namespace MyNotepad
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var services = new ServiceCollection();
-            var dbConn = new SqliteConnection(@"Data Source=C:\Users\joaon\source\repos\Teste2\MyNotepad.Persistence\Data\Database.db");
-            optionsBuilder.UseSqlite(dbConn);
+
+            var dbType = Environment.GetEnvironmentVariable("DB_TYPE");
+            var dbConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+
+            if (string.IsNullOrEmpty(dbType) || string.IsNullOrEmpty(dbConnectionString))
+                throw new InvalidOperationException("Database type or connection string is not set.");
+
+            if (dbType.Equals("Postgres", StringComparison.OrdinalIgnoreCase))
+            {
+                var dbConn = new NpgsqlConnection(dbConnectionString);
+                optionsBuilder.UseNpgsql(dbConn);
+            }
+            else if (dbType.Equals("Sqlite", StringComparison.OrdinalIgnoreCase))
+            {
+                var dbConn = new SqliteConnection(@$"Data Source={dbConnectionString}");
+                optionsBuilder.UseSqlite(dbConn);
+            }
+            else
+                throw new InvalidOperationException("Unsupported database type.");
+
             services.AddDbContext<MyNotepadDbContext>();
         }
 
